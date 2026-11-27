@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoClean — Native macOS Storage Studio & Smart Cleaner</title>
+  <meta name="description" content="Visualize physical APFS disk usage with the Luminous Orbital Map, reclaim hidden developer & orphaned app bloat with Safe/Danger badges, and deeply uninstall apps from App Store, Homebrew, or direct curl installs." />
+  <meta property="og:title" content="GoClean — Native macOS Storage Studio" />
+  <meta property="og:description" content="100% Native Swift 6 macOS Disk Analyzer, Smart Cleaner & Deep Uninstaller. Zero dependencies, zero telemetry." />
+  <meta property="og:image" content="screenshots/01-orbital-map.png" />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Ambient Floating Aurora Background -->
+  <div class="aurora-bg" aria-hidden="true">
+    <div class="aurora-orb orb-teal"></div>
+    <div class="aurora-orb orb-indigo"></div>
+    <div class="aurora-orb orb-coral"></div>
+  </div>
+
+  <!-- Sticky Translucent Navigation -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#top" class="brand">
+        <img src="logo.png" alt="GoClean Logo" class="brand-logo" width="34" height="34" />
+        <div class="brand-text">
+          <span class="brand-name">GoClean</span>
+          <span class="brand-sub">macOS Native</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#why">Why GoClean</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="#features">Features</a>
+        <a href="#safety">Safety</a>
+        <a href="#quickstart">Quick Start</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle Light/Dark theme" title="Toggle Light / Dark Mode">
+          <span class="theme-icon" aria-hidden="true">☀︎</span>
+        </button>
+        <a href="https://github.com/codzze/goclean" class="btn btn-primary btn-sm" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a10.96 10.96 0 0 1 5.77 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.24 2.76.12 3.05.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.39-5.26 5.67.42.36.79 1.07.79 2.15 0 1.56-.01 2.81-.01 3.19 0 .31.21.66.79.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero Section with Live Interactive Orbital Map -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow-pill">
+            <span class="pulse-dot"></span>
+            Swift 6 • macOS 15+ • Zero Dependencies
+          </div>
+
+          <h1 class="hero-title">
+            See every gigabyte.<br />
+            <span class="gradient-text">Reclaim your Mac safely.</span>
+          </h1>
+
+          <p class="hero-lead">
+            <strong>GoClean</strong> is an open-source, 100% native macOS disk analyzer, smart cleaner, and deep uninstaller.
+            Explore real APFS physical storage through the <strong>Luminous Orbital Map</strong>, wipe forgotten
+            <code>node_modules</code> &amp; orphaned app leftovers, and cleanly remove apps installed via
+            <strong>App Store, Homebrew, or direct curl</strong>.
+          </p>
+
+          <div class="hero-cta">
+            <a href="#quickstart" class="btn btn-primary btn-lg">
+              Build &amp; Run on macOS
+              <span aria-hidden="true">→</span>
+            </a>
+            <a href="#demo-video" class="btn btn-glass btn-lg">
+              ▶ Watch 16s Walkthrough
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <span>✓ 100% Local &amp; Private</span>
+            <span>✓ Skips iCloud Placeholders</span>
+            <span>✓ Safe / Danger Badges</span>
+            <span>✓ Move to Trash Default</span>
+          </div>
+        </div>
+
+        <!-- Live Interactive Orbital Map Sandbox -->
+        <div class="hero-visual reveal">
+          <div class="orbital-widget glass-panel">
+            <div class="widget-chrome">
+              <div class="traffic-lights" aria-hidden="true">
+                <span class="tl tl-red"></span>
+                <span class="tl tl-yellow"></span>
+                <span class="tl tl-green"></span>
+              </div>
+              <span class="widget-title">Interactive Luminous Orbital Map — Hover any ring</span>
+              <span class="widget-badge">APFS Live</span>
+            </div>
+
+            <div class="orbital-stage">
+              <canvas id="orbitalCanvas" width="460" height="460" aria-label="Interactive disk storage orbital chart"></canvas>
+              <div class="orbital-hub" id="orbitalHub">
+                <div class="hub-size" id="hubSize">312.4 GB</div>
+                <div class="hub-name" id="hubName">Macintosh HD</div>
+                <div class="hub-share" id="hubShare">Hover a slice</div>
+              </div>
+            </div>
+
+            <div class="orbital-legend" id="orbitalLegend"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why You Need GoClean (Problem & Impact Metrics) -->
+    <section id="why" class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">The Problem</span>
+          <h2>macOS silently accumulates tens of gigabytes of hidden bloat</h2>
+          <p>
+            Finder hides <code>~/Library</code>, dragging an app to Trash leaves gigabytes of caches behind,
+            and developer toolchains multiply across forgotten projects.
+          </p>
+        </div>
+
+        <div class="metrics-grid">
+          <article class="metric-card glass-panel reveal">
+            <div class="metric-num" data-count="48" data-suffix="+ GB">48+ GB</div>
+            <h3>Dormant Dev Bloat</h3>
+            <p>Old <code>node_modules</code>, Xcode <code>DerivedData</code>, Rust <code>target/</code>, SwiftPM <code>.build</code>, and global npm/Homebrew/Cargo caches sitting untouched for months.</p>
+          </article>
+
+          <article class="metric-card glass-panel reveal">
+            <div class="metric-num" data-count="14" data-suffix="+ GB">14+ GB</div>
+            <h3>Orphaned App Leftovers</h3>
+            <p>Deleted apps leave behind <code>Application Support</code>, <code>Containers</code>, <code>Caches</code>, <code>Saved State</code>, and stale <code>LaunchAgents</code> forever.</p>
+          </article>
+
+          <article class="metric-card glass-panel reveal">
+            <div class="metric-num" data-count="100" data-suffix="%">100%</div>
+            <h3>Native Swift Speed</h3>
+            <p>Zero Electron overhead. Built on POSIX <code>fstatat</code> + Swift 6 structured concurrency for blazingly fast scans and minimal RAM footprint.</p>
+          </article>
+
+          <article class="metric-card glass-panel reveal">
+            <div class="metric-num" data-count="0" data-suffix=" KB">0 KB</div>
+            <h3>Cloud &amp; Telemetry</h3>
+            <p>Runs strictly offline on your Mac. Counts dataless iCloud/OneDrive placeholders as 0 local bytes so you see true SSD usage.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Crisp App Screenshots Showcase -->
+    <section id="screenshots" class="section section-alt">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Visual Tour</span>
+          <h2>Designed to feel genuinely native to macOS</h2>
+          <p>Clean frosted glass surfaces, Dark &amp; Light mode parity, and zero clutter. All screenshots below use clean sample data.</p>
+        </div>
+
+        <div class="gallery-tabs reveal" role="tablist" aria-label="App Screenshots">
+          <button class="tab-btn active" role="tab" aria-selected="true" data-shot="0">
+            <span class="tab-dot" style="--c:#22d3ee"></span>
+            Luminous Orbital Map
+          </button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-shot="1">
+            <span class="tab-dot" style="--c:#10b981"></span>
+            Smart Cleanup &amp; Collector
+          </button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-shot="2">
+            <span class="tab-dot" style="--c:#f59e0b"></span>
+            Unified App Manager
+          </button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-shot="3">
+            <span class="tab-dot" style="--c:#6366f1"></span>
+            Light Mode Dashboard
+          </button>
+        </div>
+
+        <div class="gallery-stage glass-panel reveal">
+          <div class="gallery-image-wrap">
+            <img id="galleryImg" src="screenshots/01-orbital-map.png" alt="GoClean Luminous Orbital Map screenshot" />
+            <button id="zoomBtn" class="zoom-pill" type="button" aria-label="Inspect full resolution screenshot">
+              ⤢ Full Screen
+            </button>
+          </div>
+          <div class="gallery-caption">
+            <div>
+              <h3 id="galleryTitle">Luminous Orbital Map &amp; Bidirectional Inspector</h3>
+              <p id="galleryDesc">Switch effortlessly between Orbital Map, Treemap, and Tree List views. Hovering any slice highlights the inspector row, shows physical APFS allocation, and lets you preview with Quick Look or stage in one click.</p>
+            </div>
+            <div class="gallery-dots" id="galleryDots" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Explainer Video Section -->
+    <section id="demo-video" class="section">
+      <div class="container">
+        <div class="video-card glass-panel reveal">
+          <div class="video-header">
+            <div>
+              <span class="section-tag">16-Second Walkthrough</span>
+              <h2>See GoClean in Motion</h2>
+              <p>From live APFS scanning to Safe/Danger smart buckets and Homebrew dependency-aware uninstalls.</p>
+            </div>
+            <a href="goclean-demo.mp4" download class="btn btn-glass btn-sm">Download MP4</a>
+          </div>
+          <div class="video-frame">
+            <video controls playsinline preload="metadata" poster="preview.png">
+              <source src="goclean-demo.mp4" type="video/mp4" />
+              <img src="goclean-demo.gif" alt="GoClean animated walkthrough" />
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deep Feature Grid -->
+    <section id="features" class="section section-alt">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Built for Power Users &amp; Developers</span>
+          <h2>Every cleanup workflow in one translucent sidebar</h2>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card glass-panel reveal">
+            <div class="feat-icon" style="--accent:#22d3ee">◎</div>
+            <h3>APFS-Aware Disk Scanner</h3>
+            <p>Measures true physical blocks (<code>st_blocks * 512</code>), detects macOS <code>SF_DATALESS</code> cloud placeholders, deduplicates hard links by inode, and avoids macOS root firmlink loops.</p>
+          </article>
+
+          <article class="feature-card glass-panel reveal">
+            <div class="feat-icon" style="--accent:#a855f7">⌘</div>
+            <h3>Orphaned App Data</h3>
+            <p>Cross-references installed app bundles &amp; CLI tools against 9 <code>~/Library</code> locations while protecting Apple &amp; core runtime identifiers, grouping leftovers with confidence levels.</p>
+          </article>
+
+          <article class="feature-card glass-panel reveal">
+            <div class="feat-icon" style="--accent:#14b8a6">⚡</div>
+            <h3>Dev &amp; App Caches</h3>
+            <p>Pinpoints dormant <code>node_modules</code> (showing days inactive), Xcode <code>DerivedData</code>, Rust <code>target/</code>, SwiftPM <code>.build</code>, CocoaPods, Gradle, Python <code>.venv</code>, and Homebrew/npm/pip/Cargo caches.</p>
+          </article>
+
+          <article class="feature-card glass-panel reveal">
+            <div class="feat-icon" style="--accent:#f59e0b">◈</div>
+            <h3>Crash Dumps &amp; System Junk</h3>
+            <p>Finds <code>.ips</code>, <code>.crash</code>, <code>.dmp</code>, <code>.core</code>, and <code>.hprof</code> dump files, forgotten <code>.dmg</code>/<code>.pkg</code> installers in Downloads, Xcode DeviceSupport, and oversized logs.</p>
+          </article>
+
+          <article class="feature-card glass-panel reveal">
+            <div class="feat-icon" style="--accent:#f43f5e">▶</div>
+            <h3>Large Videos &amp; Media</h3>
+            <p>Surfaces space-hungry recordings with async <code>QuickLookThumbnailing</code> previews and hides macOS system &amp; Library files by default so you only see your media.</p>
+          </article>
+
+          <article class="feature-card glass-panel reveal">
+            <div class="feat-icon" style="--accent:#38bdf8">⧉</div>
+            <h3>3-Stage SHA-256 Duplicates</h3>
+            <p>Exact byte-size grouping → 16 KB partial fingerprint → full streaming <code>CryptoKit</code> SHA-256 verification. Smart Select always guarantees at least one original copy stays protected.</p>
+          </article>
+
+          <article class="feature-card glass-panel reveal feature-wide">
+            <div class="feat-icon" style="--accent:#10b981">⊞</div>
+            <div>
+              <h3>Unified Application Manager — App Store, Homebrew, Direct &amp; Curl CLIs</h3>
+              <p>Inspects Mac App Store receipts, live <code>brew info --json=v2 --installed</code> Casks &amp; Formulae (with reverse-dependency Danger warnings and <code>brew uninstall --cask --zap</code>), Direct DMG apps, and standalone <code>curl</code> toolchains (<code>~/.bun</code>, <code>~/.deno</code>, <code>~/.nvm</code>, <code>~/.rustup</code>, <code>~/.local/bin</code>) alongside every associated <code>~/Library</code> &amp; config folder.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Safety Architecture Section -->
+    <section id="safety" class="section">
+      <div class="container">
+        <div class="safety-panel glass-panel reveal">
+          <div class="safety-copy">
+            <span class="section-tag">Safety-First Engineering</span>
+            <h2>Clear Safe vs. Danger badges in every category</h2>
+            <p>
+              Disk cleaners should never make you guess. GoClean classifies every file with <code>FileSafetyClassifier</code>,
+              protects critical OS roots via a non-bypassable <code>SafetyGuard</code>, and routes all deletions through the bottom
+              <strong>Collector Dock</strong> using reversible <strong>Move to Trash</strong> by default.
+            </p>
+            <div class="badge-showcase">
+              <span class="safety-pill pill-safe">✓ Safe — No-impact regenerable cache or duplicate</span>
+              <span class="safety-pill pill-review">● Review — User media or project archive</span>
+              <span class="safety-pill pill-danger">⚠ Danger — System / OS file or required Brew dependency</span>
+            </div>
+          </div>
+
+          <div class="caution-box">
+            <div class="caution-title">⚠ Clean at Your Own Risk</div>
+            <p>
+              Removing system, <code>~/Library</code>, or application files can cause macOS instability or permanent data loss.
+              Always review staged items in the Collector Dock and keep Time Machine backups active.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Start Terminal Section -->
+    <section id="quickstart" class="section section-alt">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">Get Started in 30 Seconds</span>
+          <h2>Build &amp; launch natively from source</h2>
+          <p>Requires macOS 15.0+ and Xcode / Swift 6. Zero external packages to fetch.</p>
+        </div>
+
+        <div class="terminal-card glass-panel reveal">
+          <div class="terminal-top">
+            <div class="traffic-lights" aria-hidden="true">
+              <span class="tl tl-red"></span>
+              <span class="tl tl-yellow"></span>
+              <span class="tl tl-green"></span>
+            </div>
+            <span class="terminal-label">zsh — Build &amp; Launch GoClean.app</span>
+            <button id="copyCmdBtn" class="copy-btn" type="button">Copy Commands</button>
+          </div>
+          <pre id="quickStartCode"><code>git clone https://github.com/codzze/goclean.git
+cd goclean
+swift test
+./scripts/bundle_app.sh
+open build/GoClean.app</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="GoClean Logo" width="28" height="28" />
+        <span><strong>GoClean</strong> — Native Swift 6 macOS Storage Studio</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/codzze/goclean" target="_blank" rel="noopener">GitHub Repository</a>
+        <a href="https://github.com/codzze/goclean/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>
+        <a href="#top">Back to Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Fullscreen Screenshot Lightbox -->
+  <div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Full screen screenshot preview">
+    <button id="lightboxClose" class="lightbox-close" type="button" aria-label="Close preview">✕</button>
+    <img id="lightboxImg" src="" alt="Full screen GoClean preview" />
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
